@@ -1,50 +1,49 @@
 ﻿using System;
-using System.Text;
+using System.Collections.Generic;
 
 namespace Norbit.Tasks.TypeOfData
 {
-    // <summary>
-    // Выполненяет расчёты по финансовым задачам.
-    // </summary>
-    public class CompoundInterestCalculator
+    /// <summary>
+    /// Калькулятор вклада.
+    /// </summary>
+    public class DepositCalculator
     {
-        // <summary>
-        // Расчитывает сложные проценты по годам.
-        // </summary>
-        // <param name="initialDeposit">Начальный вклад (положительное число).</param>
-        // <param name="years">Количество лет (положительное целое число).</param>
-        // <param name="interestRate">Годовая процентная ставка (положительное число).</param>
-        // <returns>Строка с поэтапным расчетом накоплений.</returns>
-        public static string CalculateCompoundInterest(decimal initialDeposit, int years, decimal interestRate)
+        /// <summary>
+        /// Вычисляет сложный процент.
+        /// </summary>
+        /// <param name="initialDeposit">Стартовый размер вклада.</param>
+        /// <param name="years">Кол-во лет.</param>
+        /// <param name="interestRate">Ставка.</param>
+        /// <returns>Список кортежей (год, сумма).</returns>
+        public static List<(int year, double deposit)> CalculateCompoundInterest(
+            double initialDeposit, int years, double interestRate)
         {
-            var stringBuilder = new StringBuilder();
-            var currentAmount = initialDeposit;
+            // Валидация
+            CheckIsPositive(initialDeposit, "Стартовый размер вклада ожидается > 0.");
+            CheckIsPositive(years, "Кол-во лет ожидается > 0.");
+            CheckIsPositive(interestRate, "Ставка ожидается > 0.");
 
-            for (var year = 1; year <= years; year++)
+            double amount = initialDeposit;
+            var result = new List<(int year, double deposit)>();
+
+            for (int i = 1; i <= years; i++)
             {
-                currentAmount += currentAmount * (interestRate / 100m);
-                stringBuilder.AppendLine($"Год {year}: {currentAmount:F2} руб.");
+                amount += amount / 100 * interestRate;
+                result.Add((i, amount));
             }
 
-            return stringBuilder.ToString().TrimEnd();
+            return result;
         }
-    }
 
-    // <summary>
-    // Точка входа и тест
-    // </summary>
-    public class Program
-    {
-        public static void Main()
+        /// <summary>
+        /// Проверяет, что значение положительное.
+        /// </summary>
+        private static void CheckIsPositive(double value, string errorMessage)
         {
-            // Тестовые данные из условия
-            var initialDeposit = 1000m;
-            var years = 3;
-            var interestRate = 10m;
-
-            var result = CompoundInterestCalculator.CalculateCompoundInterest(initialDeposit, years, interestRate);
-            
-            Console.WriteLine(result);
+            if (value <= 0)
+            {
+                throw new ArgumentException(errorMessage);
+            }
         }
     }
 }

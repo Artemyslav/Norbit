@@ -4,12 +4,12 @@ using System.Text;
 namespace Norbit.Tasks.TypeOfData
 {
     // <summary>
-    // Класс для выполнения расчетов по финансовым задачам.
+    // Выполненяет расчёты по финансовым задачам.
     // </summary>
     public class CompoundInterestCalculator
     {
         // <summary>
-        // Формирует строку с расчетом сложных процентов по годам.
+        // Расчитывает сложные проценты по годам.
         // </summary>
         // <param name="initialDeposit">Начальный вклад (положительное число).</param>
         // <param name="years">Количество лет (положительное целое число).</param>

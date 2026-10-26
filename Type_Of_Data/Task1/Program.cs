@@ -13,14 +13,9 @@ namespace Norbit.Tasks.TypeOfData
             Console.WriteLine("Калькулятор сложных процентов\n");
 
             // Ввод данных от пользователя
-            Console.Write("Введите начальный вклад: ");
-            var initialDeposit = Convert.ToDouble(Console.ReadLine());
-
-            Console.Write("Введите количество лет: ");
-            var years = int.Parse(Console.ReadLine());
-
-            Console.Write("Введите годовую процентную ставку: ");
-            var interestRate = int.Parse(Console.ReadLine());
+            var initialDeposit = Convert.ToDouble(ReadValue("Введите начальный вклад: "));
+            var years = int.Parse(ReadValue("Введите количество лет: "));
+            var interestRate = int.Parse(ReadValue("Введите годовую процентную ставку: "));
 
             try
             {
@@ -43,6 +38,12 @@ namespace Norbit.Tasks.TypeOfData
             {
                 Console.WriteLine($"\n Ошибка: {ex.Message}");
             }
+        }
+
+        private static string ReadValue(string prompt)
+        {
+            Console.Write(prompt);
+            return Console.ReadLine();
         }
     }
 }
